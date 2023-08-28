@@ -22,6 +22,17 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Setup Python 3.x
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Setup Python virtual env
+        run: |
+          python3 -m venv ve1
+          cd scripts
+          ../ve1/bin/python web.py
+
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
