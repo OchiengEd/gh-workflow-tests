@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      greetings: ${{ steps.hello-world.outputs }}
+      greetings: ${{ steps.hello-world.outputs.py_version }}
     steps:
       - uses: actions/checkout@v3
 
@@ -28,18 +28,12 @@ jobs:
         run: |
           python3 -m venv ve1
           cd scripts
-          ../ve1/bin/python web.py
+          echo "py_version=$(../ve1/bin/python web.py)" >> $GITHUB_OUTPUT
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
         id: hello-world
-        run: echo Hello, world! >> $GITHUB_OUTPUT
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+        run: echo Hello, world!
 
   review:
     runs-on: ubuntu-latest
@@ -49,3 +43,10 @@ jobs:
       - name: Get Python version
         run:
           echo ${{ needs.build.outputs.greetings }}
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+
