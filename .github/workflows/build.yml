@@ -41,8 +41,9 @@ jobs:
 
     steps:
       - name: Get Python version
+        if: ${{ needs.build.outputs.py_version }} != ""
         run:
-          echo ${{ needs.build.outputs.py_version }}
+          echo "${{ needs.build.outputs.py_version }}"
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
