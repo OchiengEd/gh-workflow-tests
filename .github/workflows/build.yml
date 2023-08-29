@@ -17,6 +17,7 @@ jobs:
     outputs:
       pyver: ${{ steps.pyenv.outputs.py_version }}
       greetings: ${{ steps.hello-world.outputs.stout }}
+      script_ok: ${{ steps.script_passed.outputs.script_passed }}
     steps:
       - uses: actions/checkout@v3
 
@@ -31,6 +32,11 @@ jobs:
           python3 -m venv ve1
           cd scripts
           echo "py_version=$(../ve1/bin/python web.py)" >> $GITHUB_OUTPUT
+
+      - name: Check script passed
+        id: script_passed
+        run:
+          echo "script_passed=${{ steps.pyenv.outcome }}" >> $GITHUB_OUTPUT
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
@@ -53,4 +59,8 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+      - name: Did Python script run
+        run:
+          echo ${{ needs.build.outputs.script_ok }}
 
