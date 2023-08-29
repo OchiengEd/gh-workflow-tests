@@ -57,6 +57,7 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
+        id: multiline
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
@@ -69,3 +70,6 @@ jobs:
         run:
           echo ${{ needs.build.outputs.script_check }}
 
+      - name: Print run-tests
+        run:
+          echo ${{ steps.multiline.outputs.run-tests }}
