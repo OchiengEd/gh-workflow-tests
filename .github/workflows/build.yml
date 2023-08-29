@@ -73,3 +73,9 @@ jobs:
       - name: Print run-tests
         run:
           echo ${{ steps.multiline.outputs.run-tests }}
+
+      - name: Print environment variables
+        env:
+          MY_VAR: "/homez"
+        run:
+          echo ${MY_VAR}
