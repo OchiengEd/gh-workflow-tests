@@ -18,6 +18,7 @@ jobs:
       pyver: ${{ steps.pyenv.outputs.py_version }}
       greetings: ${{ steps.hello-world.outputs.stout }}
       script_ok: ${{ steps.script_passed.outputs.script_passed }}
+      script_check: ${{ steps.pyenv.outcome }}
     steps:
       - uses: actions/checkout@v3
 
@@ -63,4 +64,8 @@ jobs:
       - name: Did Python script run
         run:
           echo ${{ needs.build.outputs.script_ok }}
+
+      - name: Did Python script run p2
+        run:
+          echo ${{ needs.build.outputs.script_check }}
 
