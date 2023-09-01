@@ -10,7 +10,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  build-env:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -46,14 +46,14 @@ jobs:
 
   review:
     runs-on: ubuntu-latest
-    needs: build
+    needs: build-env
 
     steps:
       - name: Get Python version
-        if: ${{ needs.build.outputs.pyver }} != ""
+        if: ${{ needs.build-env.outputs.pyver }} != ""
         run:
-          echo "${{ needs.build.outputs.pyver }}"
-          echo ${{ needs.build.outputs.greetings }}
+          echo "${{ needs.build-env.outputs.pyver }}"
+          echo ${{ needs.build-env.outputs.greetings }}
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
@@ -64,11 +64,11 @@ jobs:
 
       - name: Did Python script run
         run:
-          echo ${{ needs.build.outputs.script_ok }}
+          echo ${{ needs.build-env.outputs.script_ok }}
 
       - name: Did Python script run p2
         run:
-          echo ${{ needs.build.outputs.script_check }}
+          echo ${{ needs.build-env.outputs.script_check }}
 
       - name: Print run-tests
         run:
